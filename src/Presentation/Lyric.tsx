@@ -27,41 +27,52 @@ const LyricForm = (
     }
 
     return (
-        <form onSubmit={onSubmit} className="w-100">
-            <TextField
-                inputProps={{
-                    type: 'text',
-                    id: 'txtArtist',
-                    name: 'artist'
-                }}
-                labelProps={{
-                    text: 'Artista',
-                    htmlFor: 'txtArtist'
-                }}
-            />
+        <form onSubmit={onSubmit} className={`w-100 ${style.LyricForm}`}>
+            <fieldset className={style.LyricFormFieldset}>
+                <h1 className="text-center">
+                    Lyrics Finder
+                </h1>
+                <TextField
+                    containerProps={{
+                        className: style.LyricFormField
+                    }}
+                    inputProps={{
+                        type: 'text',
+                        id: 'txtArtist',
+                        name: 'artist',
+                        required: true
+                    }}
+                    labelProps={{
+                        text: 'Artista',
+                        htmlFor: 'txtArtist'
+                    }}
+                />
 
-            <TextField
-                inputProps={{
-                    type: 'text',
-                    id: 'txtMusic',
-                    name: 'music'
-                }}
-                labelProps={{
-                    text: 'Música',
-                    htmlFor: 'txtMusic'
-                }}
-            />
-
-            <Button>
-                Buscar letra
-            </Button>
-
+                <TextField
+                    containerProps={{
+                        className: style.LyricFormField
+                    }}
+                    inputProps={{
+                        type: 'text',
+                        id: 'txtMusic',
+                        name: 'music',
+                        required: true
+                    }}
+                    labelProps={{
+                        text: 'Música',
+                        htmlFor: 'txtMusic'
+                    }}
+                />
+                <Button>
+                    Buscar letra
+                </Button>
+            </fieldset>
         </form>
     )
 }
 
 const LyricArea = ({ lyric }: { lyric: Lyric | undefined }) => (
-    <section className="overflow-auto">
+    <section className="overflow-auto w-100 h-100">
         {lyric &&
             <>
                 <h1>
@@ -70,14 +81,18 @@ const LyricArea = ({ lyric }: { lyric: Lyric | undefined }) => (
                 <h2>
                     {lyric.music.name}
                 </h2>
-                <pre>
+                <pre className={style.LyricText}>
                     {lyric.music.text}
                 </pre>
             </>
         }
-        {!lyric && <p>
-            Informe o nome do artista e a música para consultar a letra!!!
-        </p>}
+        {!lyric &&
+            <div className={style.LyricHelper}>
+                <p>
+                    Informe o nome do artista e a música para consultar a letra!!!
+                </p>
+            </div>
+        }
     </section>
 )
 

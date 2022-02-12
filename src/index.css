@@ -3,6 +3,7 @@ html, body, #root {
   height: 100%;
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -38,4 +39,8 @@ code {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.text-center{
+  text-align: center;
 }

@@ -2,3 +2,48 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
+.LyricForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.LyricFormFieldset {
+    background-color: #F7F0F5;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    padding: 10px;
+    max-width: 300px;
+    width: 100%;
+    margin: 10px;
+}
+
+.LyricFormField {
+    margin: 10px 0;
+}
+
+.LyricHelper {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.LyricHelper > p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.LyricText {
+    white-space: break-spaces;
+}
+
+@media (max-width:809px) {
+    .LyricContainer {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    } 
+}

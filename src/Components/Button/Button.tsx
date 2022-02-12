@@ -1,4 +1,5 @@
 import React from 'react';
+import style from './Button.module.css';
 
 interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode
@@ -6,7 +7,7 @@ interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = ({ children, ...rest }: IButton) => {
     return (
-        <button {...rest}>
+        <button {...rest} className={`${style.Button} ${rest.className}`}>
             {children}
         </button>
     )
