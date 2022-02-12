@@ -1,25 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import VagalumeApi from './Api/VagalumeApi';
+import NormalizeLyrics from './DataLayer/NormalizeLyric';
+import VagalumeResponse from './DataLayer/VagalumeResponse';
+import FetchHttpClient from './Infra/FetchHttpClient';
+import LyricPage from './Presentation/Lyric';
 
-function App() {
+const App = () => {
+  const vagalumeApi = new VagalumeApi();
+  const normalizeData = new NormalizeLyrics();
+  const responseHandler = new VagalumeResponse(normalizeData);
+
+  const httpClient = new FetchHttpClient(vagalumeApi, responseHandler);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className='w-100 h-100 overflow-hidden'>
+      <LyricPage httpClient={httpClient} />
+    </main>
   );
 }
 
