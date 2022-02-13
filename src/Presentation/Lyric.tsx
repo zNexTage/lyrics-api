@@ -38,9 +38,15 @@ const LyricForm = (
             return;
         }
 
-        const lyric: Lyric = await httpClient.get(artist, music);
+        try {
+            const lyric: Lyric = await httpClient.get(artist, music);
+            onLyricRequestSuccess(lyric);
+        }
+        catch (err) {
+            if (err instanceof Error) alert(err.message);
+            else alert('Um erro inesperado ocorreu e não foi possível obter a letra da música.')
+        }
 
-        onLyricRequestSuccess(lyric);
     }
 
     return (

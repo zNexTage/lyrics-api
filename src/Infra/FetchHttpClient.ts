@@ -11,12 +11,23 @@ class FetchHttpClient implements IHttpGetLyrics<Lyric> {
     ) { }
 
     async get(artistName: string, musicName: string): Promise<Lyric> {
-        debugger
-        const response = await fetch(this.lyricApi.getUrl(artistName, musicName))
+        let response, responseData;
 
-        const responseData = <LyricResponse>await response.json();
+        try {
+            response = await fetch(this.lyricApi.getUrl(artistName, musicName))
 
-        return this.responseHandler.handler(responseData);
+            responseData = <LyricResponse>await response.json();
+        }
+        catch (err) {
+            throw new Error('Ocorreu um erro e não foi possível obter a letra da música.');
+        }
+
+        try {
+            return this.responseHandler.handler(responseData);
+        }
+        catch (err) {
+            throw err;
+        }
     }
 
 }

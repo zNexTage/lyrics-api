@@ -1,6 +1,8 @@
 import INormalizeData from "../Domain/INormalizeData";
 import IResponse from "../Domain/IResponse";
 import Lyric from "../Model/Lyric";
+import ArtistNotFound from "../Validation/Errors/ArtistNotFound";
+import SongNotFound from "../Validation/Errors/SongNotFound";
 import LyricResponse, { LyricResponseType } from "./LyricResponse";
 
 
@@ -16,14 +18,12 @@ class VagalumeResponse implements IResponse<LyricResponse, Lyric> {
                 return this.normalizeData.handler(responseData);
             }
             case LyricResponseType.NOT_FOUND: {
-                throw new Error("Artista não foi encontrado");
-                
-                break;
+                throw new ArtistNotFound();
             }
             case LyricResponseType.SONG_NOT_FOUND: {
-                throw new Error("Música não encotrada");
-                break;
+                throw new SongNotFound();
             }
+            default: throw new Error('Não foi possível obter a letra da música solicitada.');
         }
     }
 
