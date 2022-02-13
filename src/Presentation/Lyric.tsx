@@ -3,13 +3,15 @@ import Button from "../Components/Button";
 import TextField from "../Components/TextField";
 import IHttpGetLyrics from "../DataLayer/IHttpGetLyrics";
 import Lyric from "../Model/Lyric";
+import Validator from "../Validation/Validator";
+import RequiredFieldValidation from "../Validation/Validators/RequiredFieldValidation";
 import style from './Lyric.module.css';
 
 
 const LyricForm = (
     { httpClient, onLyricRequestSuccess }: {
         httpClient: IHttpGetLyrics<Lyric>,
-        onLyricRequestSuccess: (lyric: Lyric) => void
+        onLyricRequestSuccess: (lyric: Lyric) => void,
     },
 
 ) => {
@@ -20,6 +22,21 @@ const LyricForm = (
 
         const artist = `${formData.get('artist')}`;
         const music = `${formData.get('music')}`;
+
+        const validator = new Validator([
+            new RequiredFieldValidation('Artista', artist),
+            new RequiredFieldValidation('Música', music)
+        ]);
+
+        const result = validator.validate();
+
+        if (!result.isValid) {
+            const resultFailed = result.getError();
+
+            alert(resultFailed);
+
+            return;
+        }
 
         const lyric: Lyric = await httpClient.get(artist, music);
 
@@ -96,7 +113,10 @@ const LyricArea = ({ lyric }: { lyric: Lyric | undefined }) => (
     </section>
 )
 
-const LyricPage = ({ httpClient }: { httpClient: IHttpGetLyrics<Lyric> }) => {
+const LyricPage = ({ httpClient }:
+    {
+        httpClient: IHttpGetLyrics<Lyric>
+    }) => {
     const [lyric, setLyric] = useState<Lyric>();
 
     const onLyricRequestSuccess = (lyricResponse: Lyric) => {
