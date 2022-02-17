@@ -16,7 +16,7 @@ class FetchHttpClient implements IHttpGetLyrics<Lyric> {
         try {
             response = await fetch(this.lyricApi.getUrl(artistName, musicName))
 
-            responseData = <LyricResponse>await response.json();
+            responseData = await response.json() as LyricResponse;
         }
         catch (err) {
             throw new Error('Ocorreu um erro e não foi possível obter a letra da música.');
