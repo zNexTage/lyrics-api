@@ -17,8 +17,9 @@ const LyricForm = (
 ) => {
     const onSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
+        const form = event.target as HTMLFormElement
 
-        const formData = new FormData(event.target as HTMLFormElement);
+        const formData = new FormData(form);
 
         const artist = `${formData.get('artist')}`;
         const music = `${formData.get('music')}`;
@@ -41,6 +42,7 @@ const LyricForm = (
         try {
             const lyric: Lyric = await httpClient.get(artist, music);
             onLyricRequestSuccess(lyric);
+            form.reset();
         }
         catch (err) {
             if (err instanceof Error) alert(err.message);
