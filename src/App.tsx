@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import VagalumeApi from './Api/VagalumeApi';
 import NormalizeLyrics from './DataLayer/NormalizeLyric';
 import VagalumeResponse from './DataLayer/VagalumeResponse';
