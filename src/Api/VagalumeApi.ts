@@ -5,12 +5,11 @@ class VagalumeApi implements ILyricApi {
     static BASE_URL = "https://api.vagalume.com.br/search.php";
 
     getUrl(artistName: string, musicName: string) {
-        debugger
         const url = new StringBuilder(VagalumeApi.BASE_URL);
 
         url.append(`?art=${artistName}`);
         url.append(`&mus=${musicName}`);
-        url.append('&apikey=');
+        url.append(`&apikey=${process.env.REACT_APP_LYRIC_API}`);
 
         return url.toString();
     }
