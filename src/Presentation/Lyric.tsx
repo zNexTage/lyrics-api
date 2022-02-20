@@ -15,6 +15,8 @@ const LyricForm = (
     },
 
 ) => {
+    const [loading, setLoading] = useState<boolean>(false);
+
     const onSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         const form = event.target as HTMLFormElement
@@ -39,6 +41,8 @@ const LyricForm = (
             return;
         }
 
+        setLoading(true);
+
         try {
             const lyric: Lyric = await httpClient.get(artist, music);
             onLyricRequestSuccess(lyric);
@@ -48,8 +52,13 @@ const LyricForm = (
             if (err instanceof Error) alert(err.message);
             else alert('Um erro inesperado ocorreu e não foi possível obter a letra da música.')
         }
+        finally {
+            setLoading(false);
+        }
 
     }
+
+
 
     return (
         <form onSubmit={onSubmit} className={`w-100 ${style.LyricForm}`}>
@@ -65,7 +74,8 @@ const LyricForm = (
                         type: 'text',
                         id: 'txtArtist',
                         name: 'artist',
-                        required: true
+                        required: true,
+                        disabled: loading
                     }}
                     labelProps={{
                         text: 'Artista',
@@ -81,15 +91,16 @@ const LyricForm = (
                         type: 'text',
                         id: 'txtMusic',
                         name: 'music',
-                        required: true
+                        required: true,
+                        disabled: loading
                     }}
                     labelProps={{
                         text: 'Música',
                         htmlFor: 'txtMusic'
                     }}
                 />
-                <Button>
-                    Buscar letra
+                <Button disabled={loading}>
+                    {loading ? 'Aguarde...' : 'Buscar letra'}
                 </Button>
             </fieldset>
         </form>
