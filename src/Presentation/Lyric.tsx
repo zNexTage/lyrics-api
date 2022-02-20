@@ -108,7 +108,7 @@ const LyricForm = (
 }
 
 const LyricArea = ({ lyric }: { lyric: Lyric | undefined }) => (
-    <section className="overflow-auto w-100 h-100">
+    <section className={`overflow-auto w-100 h-100 ${style.LyricAreaContainer}`}>
         {lyric &&
             <>
                 <h1>
